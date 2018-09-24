@@ -5,9 +5,13 @@ import './reset.css';
 import './main.css';
 import './mouseMove';
 import store from './store';
+import {getAlarmAction} from "./store/actionCreators";
 
-/*setInterval(() => {
-    console.log(store.getState().mouseMove);
+/*const action = getAlarmAction();
+setInterval(() => {
+    if (!store.getState().mouseMove) {
+        store.dispatch(action);
+    }
 }, 1000);*/
 
-/*ReactDOM.render(<App />, document.getElementById('table'));*/
+ReactDOM.render(<App />, document.getElementById('table'));

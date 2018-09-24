@@ -15,17 +15,6 @@ import Checkbox from './Checkbox';
 import Button from './Button';
 import {getAlarmAction} from "../store/actionCreators";
 
-const styles = theme => ({
-    root: {
-        width: '100%',
-        marginTop: theme.spacing.unit * 3,
-        overflowX: 'auto',
-    },
-    table: {
-        minWidth: 700,
-    },
-});
-
 let counter = 0;
 function createData(name, calories, fat, carbs, protein) {
     counter += 1;
@@ -65,33 +54,41 @@ const rows = [
     { name: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
 ];
 
+const styles = theme => ({
+    root: {
+        width: '100%',
+        marginTop: theme.spacing.unit * 3,
+    },
+    table: {
+        minWidth: 1020,
+    },
+    tableWrapper: {
+        overflowX: 'auto',
+    },
+});
+
 class EnhancedTable extends React.Component {
-    constructor(props) {
-        super(props);
-        const { orderBy } = this.props;
-        this.handleButtonClick = this.handleButtonClick.bind(this);
-        this.state = {
-            order: 'asc',
-            orderBy: orderBy || 'calories',
-            selected: [],
-            data: [
-                createData('Cupcake', 305, 3.7, 67, 4.3),
-                createData('Donut', 452, 25.0, 51, 4.9),
-                createData('Eclair', 262, 16.0, 24, 6.0),
-                createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-                createData('Gingerbread', 356, 16.0, 49, 3.9),
-                createData('Honeycomb', 408, 3.2, 87, 6.5),
-                createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-                createData('Jelly Bean', 375, 0.0, 94, 0.0),
-                createData('KitKat', 518, 26.0, 65, 7.0),
-                createData('Lollipop', 392, 0.2, 98, 0.0),
-                createData('Marshmallow', 318, 0, 81, 2.0),
-                createData('Nougat', 360, 19.0, 9, 37.0),
-                createData('Oreo', 437, 18.0, 63, 4.0),
-            ],
-            page: 0,
-            rowsPerPage: 8,
-        }
+    state = {
+        order: 'asc',
+        orderBy: 'id',
+        selected: [],
+        data: [
+            createData('Cupcake', 305, 3.7, 67, 4.3),
+            createData('Donut', 452, 25.0, 51, 4.9),
+            createData('Eclair', 262, 16.0, 24, 6.0),
+            createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+            createData('Gingerbread', 356, 16.0, 49, 3.9),
+            createData('Honeycomb', 408, 3.2, 87, 6.5),
+            createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+            createData('Jelly Bean', 375, 0.0, 94, 0.0),
+            createData('KitKat', 518, 26.0, 65, 7.0),
+            createData('Lollipop', 392, 0.2, 98, 0.0),
+            createData('Marshmallow', 318, 0, 81, 2.0),
+            createData('Nougat', 360, 19.0, 9, 37.0),
+            createData('Oreo', 437, 18.0, 63, 4.0),
+        ],
+        page: 0,
+        rowsPerPage: 5,
     };
 
     handleRequestSort = (event, property) => {
@@ -144,21 +141,14 @@ class EnhancedTable extends React.Component {
 
     isSelected = id => this.state.selected.indexOf(id) !== -1;
 
-    handleButtonClick = event => {
-        event.stopPropagation();
-        const value = event.target.value;
-        this.props.getAlarmData();
-        console.log(value);
-    };
-
     render() {
-        const { classes, ButtonText, title } = this.props;
-        const { order, orderBy, selected, rowsPerPage, page, data} = this.state;
+        const { classes } = this.props;
+        const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
         return (
             <Paper className={classes.root}>
-                <Toolbar numSelected={selected.length} title={title}/>
+                <Toolbar numSelected={selected.length} />
                 <div className={classes.tableWrapper}>
                     <Table className={classes.table} aria-labelledby="tableTitle">
                         <TableHead
@@ -169,13 +159,11 @@ class EnhancedTable extends React.Component {
                             onRequestSort={this.handleRequestSort}
                             rowCount={data.length}
                             rows={rows}
-                            emptyCell={1}
                         />
                         <TableBody>
                             {stableSort(data, getSorting(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map(n => {
-                                    /*n = createData(n);*/
                                     const isSelected = this.isSelected(n.id);
                                     return (
                                         <TableRow
@@ -190,53 +178,44 @@ class EnhancedTable extends React.Component {
                                             <TableCell padding="checkbox">
                                                 <Checkbox checked={isSelected} />
                                             </TableCell>
+                                            {/*<TableCell component="th" scope="row" padding="none">
+                                                {n.name}
+                                            </TableCell>
+                                            <TableCell numeric>{n.calories}</TableCell>
+                                            <TableCell numeric>{n.fat}</TableCell>
+                                            <TableCell numeric>{n.carbs}</TableCell>
+                                            <TableCell numeric>{n.protein}</TableCell>*/}
                                             {
                                                 Object.keys(n).map((key, index) => {
                                                     if (index === 0) {
+                                                        console.log(key);
                                                         return (
                                                             <TableCell
                                                                 component="th"
                                                                 scope="row"
                                                                 padding="none"
-                                                                key={key}
+                                                                key={index}
                                                             >
                                                                 {n[key]}
                                                             </TableCell>
                                                         )
                                                     } else {
                                                         return (
-                                                            <TableCell numeric key={key}>{n[key]}</TableCell>
+                                                            <TableCell
+                                                                numeric
+                                                                key={index}
+                                                            >
+                                                                {n[key]}
+                                                            </TableCell>
                                                         )
                                                     }
                                                 })
-                                            }
-                                            {/*<TableCell>
-                                                <Button>testing</Button>
-                                            </TableCell>*/}
-                                            {
-                                                ButtonText.length > 0 && (<TableCell>
-                                                    {
-                                                        ButtonText.map((text) => {
-                                                            return (
-                                                                <Button
-                                                                    variant='contained'
-                                                                    color='primary'
-                                                                    onClick={this.handleButtonClick}
-                                                                    value={text}
-                                                                    key={text}
-                                                                >
-                                                                    { text }
-                                                                </Button>
-                                                            )
-                                                        })
-                                                    }
-                                                </TableCell>)
                                             }
                                         </TableRow>
                                     );
                                 })}
                             {emptyRows > 0 && (
-                                <TableRow style={{ height: 35 * emptyRows }}>
+                                <TableRow style={{ height: 49 * emptyRows }}>
                                     <TableCell colSpan={6} />
                                 </TableRow>
                             )}
@@ -256,7 +235,6 @@ class EnhancedTable extends React.Component {
                     }}
                     onChangePage={this.handleChangePage}
                     onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                    rowsPerPageOptions={[this.rowsPerPage]}
                 />
             </Paper>
         );

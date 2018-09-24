@@ -4,8 +4,9 @@ import TableCell from '@material-ui/core/TableCell';
 
 const CustomTableCell = withStyles(theme => ({
     root: {
-        padding: '2px 56px 2px 24px',
-        borderBottom: 'none'
+        padding: '0px',
+        borderBottom: 'none',
+        textAlign: 'center',
     },
     /*head: {
         backgroundColor: theme.palette.common.black,

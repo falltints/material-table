@@ -4,7 +4,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 const CustomCheckbox = withStyles(() => ({
     root: {
-        padding: '2px'
+        padding: 2
     }
 }))(Checkbox);
 

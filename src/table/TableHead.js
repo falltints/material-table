@@ -14,7 +14,7 @@ class EnhancedTableHead extends React.Component {
     };
 
     render() {
-        const { onSelectAllClick, order, orderBy, numSelected, rowCount, rows } = this.props;
+        const { onSelectAllClick, order, orderBy, numSelected, rowCount, rows, emptyCell } = this.props;
 
         return (
             <TableHead>
@@ -34,22 +34,29 @@ class EnhancedTableHead extends React.Component {
                                 padding={row.disablePadding ? 'none' : 'default'}
                                 sortDirection={orderBy === row.name ? order : false}
                             >
-                                <Tooltip
-                                    title="Sort"
-                                    placement={row.numeric ? 'bottom-end' : 'bottom-start'}
-                                    enterDelay={300}
-                                >
-                                    <TableSortLabel
-                                        active={orderBy === row.name}
-                                        direction={order}
-                                        onClick={this.createSortHandler(row.name)}
-                                    >
-                                        {row.label}
-                                    </TableSortLabel>
-                                </Tooltip>
+                                {
+                                    orderBy === row.name ? (
+                                        <Tooltip
+                                            title="Sort"
+                                            placement={row.numeric ? 'bottom-end' : 'bottom-start'}
+                                            enterDelay={300}
+                                        >
+                                            <TableSortLabel
+                                                active={true}
+                                                direction={order}
+                                                onClick={this.createSortHandler(row.name)}
+                                            >
+                                                {row.label}
+                                            </TableSortLabel>
+                                        </Tooltip>
+                                    ) : (<span>{row.label}</span>)
+                                }
                             </TableCell>
                         );
                     }, this)}
+                    {
+                        emptyCell && <TableCell>{''}</TableCell>
+                    }
                 </TableRow>
             </TableHead>
         );
