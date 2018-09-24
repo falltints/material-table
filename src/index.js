@@ -3,18 +3,11 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './reset.css';
 import './main.css';
+import './mouseMove';
+import store from './store';
 
-/*export let mouseMove = false;
-const root = document.getElementById('root');
-let timer;
-root.onmousemove = () => {
-    mouseMove = true;
-    if (timer) {
-        clearTimeout(timer);
-    }
-    timer = setTimeout(() => {
-        mouseMove = false;
-    }, 5000)
-};*/
+/*setInterval(() => {
+    console.log(store.getState().mouseMove);
+}, 1000);*/
 
 /*ReactDOM.render(<App />, document.getElementById('table'));*/
