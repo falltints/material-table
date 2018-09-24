@@ -1,0 +1,62 @@
+html {
+    overflow: hidden;
+}
+
+#root {
+    width: 100vw;
+    height: 100vh;
+}
+
+#map1 {
+    width: 35vw;
+    height: 40vh;
+    position: absolute;
+    background-color: burlywood;
+    top: 0;
+    left: 0;
+}
+
+#map2 {
+    width: 35vw;
+    height: 40vh;
+    position: absolute;
+    background-color: brown;
+    top: 40vh;
+    left: 0;
+}
+
+#title {
+    width: 65vw;
+    height: 10vh;
+    background-color: cadetblue;
+    position: absolute;
+    top: 0;
+    left: 35vw;
+}
+
+#table {
+    width: 65vw;
+    height: 70vh;
+    background-color: darkblue;
+    position: absolute;
+    top: 10vh;
+    left: 35vw;
+}
+
+#container1 {
+    width: 50vw;
+    height: 20vh;
+    background-color: darkgreen;
+    position: absolute;
+    top: 80vh;
+    left: 0;
+}
+
+#container2 {
+    width: 50vw;
+    height: 20vh;
+    background-color: darkgoldenrod;
+    position: absolute;
+    top: 80vh;
+    left: 50vw;
+}
